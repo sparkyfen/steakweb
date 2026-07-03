@@ -156,7 +156,7 @@ async def create_extn(request):
         await init_db_pool()
 
     name = data.get('name', '')
-    publish = 't' if data.get('publish') else 'f'
+    publish = bool(data.get('publish'))
     if data['type'] == 'sip':
         switch = 11
         authcode = gen_sip_pw()
