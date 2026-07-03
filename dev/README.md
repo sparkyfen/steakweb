@@ -3,9 +3,8 @@
 Runs steakweb on your machine against a throwaway Postgres, no prod DB or SAML
 IdP needed. Enough to click through the activation form and the directory.
 
-There's no schema in the repo, so `dev/schema.sql` is reconstructed from the SQL
-in `steakweb.py`. It's close enough that everything works, but if the real
-schema turns up, drop it in and recreate the DB (`down -v` then `up`).
+`dev/schema.sql` is the production schema (posted by supersat in PR #2), plus a
+primary key on `extn` that create_extn's "already taken" handling relies on.
 
 Everything dev-only is gated on `STEAKWEB_DEV`, so it's off in prod.
 
@@ -54,7 +53,7 @@ Activation, needs a session:
 - In the Add a New Extension form:
   - letters (`ABCD`) → "Extension must be a four-digit number", no 500
   - out of range (`1999`, `7000`) → "Extension number must start with 2, 3, 4, 5, or 6"
-  - a taken number (`2345`) → "That extension is already taken; please choose another"
+  - a taken number (`2345`) → "Extension 2345 is already taken; please choose another"
   - a free number 2000–6999 → created, shows up in the list
 
 ## Done testing
