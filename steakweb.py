@@ -187,7 +187,7 @@ async def publish_extn(request):
     if check_auth_isadmin(session):
         n = await dbconn.execute("UPDATE registered_extensions SET publish = $2 WHERE extn = $1", int(data['extn']), data.get('published', '0')== '1')
     else:
-        n = await dbconn.execute("UPDATE registered_extensions SET publish = $2 WHERE extn = $1 AND userid = $3", int(data['extn']), data.get('publish', '1') == '1', int(session['uid']))
+        n = await dbconn.execute("UPDATE registered_extensions SET publish = $2 WHERE extn = $1 AND userid = $3", int(data['extn']), data.get('published', '0') == '1', int(session['uid']))
 
     if n != 'UPDATE 1':
         session['error'] = 'Could not change directory name; contact support'
